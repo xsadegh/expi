@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"go.sadegh.io/expi/internal/errors"
-	"go.sadegh.io/expi/models/event"
+	"go.sadegh.io/expi/types/event"
 )
 
 func (h *HitBTC) receive(evt *event.Event) {

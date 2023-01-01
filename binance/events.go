@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"go.sadegh.io/expi/internal/errors"
-	"go.sadegh.io/expi/models/event"
+	"go.sadegh.io/expi/types/event"
 )
 
 func (b *Binance) receive(evt *event.Event) {

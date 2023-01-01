@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 
 	"go.sadegh.io/expi/internal/api"
-	"go.sadegh.io/expi/models"
+	"go.sadegh.io/expi/types"
 )
 
-type AssetsResponse models.Assets
+type AssetsResponse types.Assets
 
 func (r *AssetsResponse) UnmarshalJSON(data []byte) error {
 	var v struct {
@@ -22,7 +22,7 @@ func (r *AssetsResponse) UnmarshalJSON(data []byte) error {
 	}
 
 	for _, asset := range v.Assets {
-		*r = append(*r, models.Asset{
+		*r = append(*r, types.Asset{
 			Currency: asset.Currency,
 			Lock:     asset.Lock,
 			Free:     asset.Free,
@@ -32,11 +32,11 @@ func (r *AssetsResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (b *Binance) GetAssets() (models.Assets, error) {
+func (b *Binance) GetAssets() (types.Assets, error) {
 	response := AssetsResponse{}
 	err := b.api.Request(api.Request{
 		Method: "GET", Endpoint: "/account", Authenticate: true,
 	}, nil, &response)
 
-	return models.Assets(response), err
+	return types.Assets(response), err
 }

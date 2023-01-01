@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"go.sadegh.io/expi/internal/api"
-	"go.sadegh.io/expi/models"
+	"go.sadegh.io/expi/types"
 )
 
 type OrderParams struct {
@@ -23,7 +23,7 @@ type OrderParams struct {
 	StrictValidate bool      `json:"strict_validate,omitempty"`
 }
 
-type OrderResponse models.Report
+type OrderResponse types.Report
 
 func (r *OrderResponse) UnmarshalJSON(data []byte) error {
 	var v struct {
@@ -61,16 +61,16 @@ func (r *OrderResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (h *HitBTC) NewOrder(params OrderParams) (models.Report, error) {
+func (h *HitBTC) NewOrder(params OrderParams) (types.Report, error) {
 	response := OrderResponse{}
 	err := h.api.Request(api.Request{
 		Method: "POST", Endpoint: "/spot/order", Authenticate: true,
 	}, params, &response)
 
-	return models.Report(response), err
+	return types.Report(response), err
 }
 
-func (h *HitBTC) CancelOrder(symbol, orderID string) (models.Report, error) {
+func (h *HitBTC) CancelOrder(symbol, orderID string) (types.Report, error) {
 	if orderID != "" {
 		symbol = ""
 	}
@@ -81,5 +81,5 @@ func (h *HitBTC) CancelOrder(symbol, orderID string) (models.Report, error) {
 		Symbol string `json:"symbol,omitempty"`
 	}{symbol}, &response)
 
-	return models.Report(response), err
+	return types.Report(response), err
 }

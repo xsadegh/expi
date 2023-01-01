@@ -6,7 +6,7 @@ import (
 
 	"golang.org/x/time/rate"
 
-	"go.sadegh.io/expi/models/event"
+	"go.sadegh.io/expi/types/event"
 )
 
 type Stream struct {

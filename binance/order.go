@@ -7,7 +7,7 @@ import (
 
 	"go.sadegh.io/expi/internal/api"
 	"go.sadegh.io/expi/internal/cast"
-	"go.sadegh.io/expi/models"
+	"go.sadegh.io/expi/types"
 )
 
 type OrderParams struct {
@@ -21,7 +21,7 @@ type OrderParams struct {
 	ClientOrderID string  `json:"newClientOrderId,omitempty"`
 }
 
-type OrderResponse models.Report
+type OrderResponse types.Report
 
 func (r *OrderResponse) UnmarshalJSON(data []byte) error {
 	var v struct {
@@ -76,16 +76,16 @@ func (r *OrderResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (b *Binance) NewOrder(params OrderParams) (models.Report, error) {
+func (b *Binance) NewOrder(params OrderParams) (types.Report, error) {
 	response := OrderResponse{}
 	err := b.api.Request(api.Request{
 		Method: "POST", Endpoint: "/order", Authenticate: true,
 	}, params, &response)
 
-	return models.Report(response), err
+	return types.Report(response), err
 }
 
-func (b *Binance) CancelOrder(symbol, orderID string) (models.Report, error) {
+func (b *Binance) CancelOrder(symbol, orderID string) (types.Report, error) {
 	response := OrderResponse{}
 	err := b.api.Request(api.Request{
 		Method: "DELETE", Endpoint: "/order", Authenticate: true,
@@ -94,5 +94,5 @@ func (b *Binance) CancelOrder(symbol, orderID string) (models.Report, error) {
 		OrderID string `json:"origClientOrderId"`
 	}{symbol, orderID}, &response)
 
-	return models.Report(response), err
+	return types.Report(response), err
 }

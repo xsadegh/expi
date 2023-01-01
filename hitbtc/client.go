@@ -3,7 +3,7 @@ package hitbtc
 import (
 	"go.sadegh.io/expi/internal/api"
 	"go.sadegh.io/expi/internal/stream"
-	"go.sadegh.io/expi/models/event"
+	"go.sadegh.io/expi/types/event"
 )
 
 type HitBTC struct {

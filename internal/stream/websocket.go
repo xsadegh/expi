@@ -12,7 +12,7 @@ import (
 
 	"go.sadegh.io/expi/internal/api"
 	"go.sadegh.io/expi/internal/errors"
-	"go.sadegh.io/expi/models/event"
+	"go.sadegh.io/expi/types/event"
 )
 
 type Request struct {

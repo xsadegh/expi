@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 
 	"go.sadegh.io/expi/internal/api"
-	"go.sadegh.io/expi/models"
+	"go.sadegh.io/expi/types"
 )
 
-type SymbolsResponse models.Symbols
+type SymbolsResponse types.Symbols
 
 func (r *SymbolsResponse) UnmarshalJSON(data []byte) error {
 	var v struct {
@@ -23,7 +23,7 @@ func (r *SymbolsResponse) UnmarshalJSON(data []byte) error {
 	}
 
 	for _, symbol := range v.Symbols {
-		*r = append(*r, models.Symbol{
+		*r = append(*r, types.Symbol{
 			ID:        symbol.ID,
 			Base:      symbol.Base,
 			Quote:     symbol.Quote,
@@ -34,11 +34,11 @@ func (r *SymbolsResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (b *Binance) GetSymbols() (models.Symbols, error) {
+func (b *Binance) GetSymbols() (types.Symbols, error) {
 	response := SymbolsResponse{}
 	err := b.api.Request(api.Request{
 		Method: "GET", Endpoint: "/exchangeInfo",
 	}, nil, &response)
 
-	return models.Symbols(response), err
+	return types.Symbols(response), err
 }

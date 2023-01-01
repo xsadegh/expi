@@ -7,10 +7,10 @@ import (
 
 	"go.sadegh.io/expi/internal/cast"
 	"go.sadegh.io/expi/internal/stream"
-	"go.sadegh.io/expi/models"
+	"go.sadegh.io/expi/types"
 )
 
-type ReportResponse models.Report
+type ReportResponse types.Report
 
 func (r *ReportResponse) UnmarshalJSON(data []byte) error {
 	var v struct {

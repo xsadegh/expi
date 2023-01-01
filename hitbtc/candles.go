@@ -8,12 +8,12 @@ import (
 
 	"go.sadegh.io/expi/internal/cast"
 	"go.sadegh.io/expi/internal/stream"
-	"go.sadegh.io/expi/models"
+	"go.sadegh.io/expi/types"
 )
 
 const Period1Minute string = "M1"
 
-type CandleResponse models.Candle
+type CandleResponse types.Candle
 
 func (r *CandleResponse) UnmarshalJSON(data []byte) error {
 	var v map[string][]struct {
