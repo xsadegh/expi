@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"go.sadegh.io/expi/internal/errors"
+	"go.sadegh.io/expi/types"
 	"go.sadegh.io/expi/types/event"
 )
 
@@ -29,7 +29,7 @@ func (b *Binance) receive(evt *event.Event) {
 		b.receiver(&event.Event{Event: candle})
 
 	case "error":
-		apiError := &errors.BinanceApiErr{}
+		apiError := &types.ApiErr{}
 		switch evt.Response.(type) {
 		case []byte:
 			err := json.Unmarshal(evt.Response.([]byte), &apiError)

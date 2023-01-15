@@ -10,12 +10,9 @@ import (
 	"time"
 
 	"golang.org/x/time/rate"
-
-	"go.sadegh.io/expi/internal/errors"
 )
 
 type API struct {
-	error         error
 	baseURL       string
 	limiter       *rate.Limiter
 	headers       map[string]string
@@ -49,7 +46,6 @@ func NewHitbtcAPI(keys ...string) *API {
 		req.SetBasicAuth(public, secret)
 	}
 	api.baseURL = "https://api.hitbtc.com/api/3"
-	api.error = &errors.HitBTCApiErr{}
 
 	return api
 }
@@ -73,7 +69,6 @@ func NewBinanceAPI(keys ...string) *API {
 		parsedURL.RawQuery = q.Encode() + "&signature=" + generateSignature(secret, q)
 	}
 	api.baseURL = "https://api.binance.com/api/v3"
-	api.error = &errors.BinanceApiErr{}
 
 	return api
 }

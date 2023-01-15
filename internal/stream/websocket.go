@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/websocket"
 
 	"go.sadegh.io/expi/internal/api"
-	"go.sadegh.io/expi/internal/errors"
+	"go.sadegh.io/expi/types"
 	"go.sadegh.io/expi/types/event"
 )
 
@@ -83,7 +83,7 @@ func (s *Stream) Request(request Request) error {
 
 	if request.Authenticate {
 		if s.publicKey == "" || s.secretKey == "" {
-			return errors.ErrKeysNotSet
+			return types.ErrKeysNotSet
 		}
 
 		s.authenticate(conn)

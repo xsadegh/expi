@@ -1,4 +1,4 @@
-package errors
+package types
 
 import (
 	"encoding/json"
@@ -43,24 +43,4 @@ func (e *ApiErr) UnmarshalJSON(data []byte) error {
 
 func (e *ApiErr) Error() string {
 	return fmt.Sprintf("[%d]: %s", e.Code, e.Message)
-}
-
-type BinanceApiErr struct {
-	Code    int    `json:"code"`
-	Message string `json:"msg"`
-}
-
-func (e *BinanceApiErr) Error() string {
-	return e.Message
-}
-
-type HitBTCApiErr struct {
-	Err struct {
-		Code    int    `json:"code"`
-		Message string `json:"message"`
-	} `json:"error"`
-}
-
-func (e *HitBTCApiErr) Error() string {
-	return fmt.Sprintf("[%d]: %s", e.Err.Code, e.Err.Message)
 }

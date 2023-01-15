@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"go.sadegh.io/expi/internal/errors"
+	"go.sadegh.io/expi/types"
 )
 
 type Request struct {
@@ -28,7 +28,7 @@ func (h *API) Request(request Request, params, response any) (err error) {
 
 	if request.Authenticate {
 		if h.publicKey == "" || h.secretKey == "" {
-			return errors.ErrKeysNotSet
+			return types.ErrKeysNotSet
 		}
 	}
 
@@ -67,7 +67,7 @@ func (h *API) Request(request Request, params, response any) (err error) {
 	defer func() { _ = res.Body.Close() }()
 
 	if res.StatusCode != 200 {
-		apiErr := &errors.ApiErr{}
+		apiErr := &types.ApiErr{}
 		if err = json.NewDecoder(res.Body).Decode(&apiErr); err != nil {
 			return
 		}

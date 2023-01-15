@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"go.sadegh.io/expi/internal/errors"
+	"go.sadegh.io/expi/types"
 	"go.sadegh.io/expi/types/event"
 )
 
@@ -33,7 +33,7 @@ func (h *HitBTC) receive(evt *event.Event) {
 		h.receiver(&event.Event{Event: candle})
 
 	case evt.Topic == "error":
-		apiError := &errors.HitBTCApiErr{}
+		apiError := &types.ApiErr{}
 		switch evt.Response.(type) {
 		case []byte:
 			err := json.Unmarshal(evt.Response.([]byte), &apiError)
