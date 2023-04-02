@@ -53,7 +53,7 @@ func (r *ReportResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (b *Binance) SubscribeReports() error {
-	request := stream.Request{Endpoint: "/" + b.stream.ListenKey()}
+	request := &stream.Request{Endpoint: "/" + b.stream.ListenKey()}
 
 	err := b.stream.Request(request)
 	if err != nil {

@@ -54,7 +54,7 @@ func (h *HitBTC) SubscribeCandles(period string, symbols []string) error {
 	ch := fmt.Sprintf("candles/%s", period)
 	period = ""
 
-	request := stream.Request{
+	request := &stream.Request{
 		Params: struct {
 			Period  string   `json:"period,omitempty"`
 			Symbols []string `json:"symbols,omitempty"`

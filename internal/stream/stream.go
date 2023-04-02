@@ -17,7 +17,7 @@ type Stream struct {
 	listenKey    string
 	authenticate authenticator
 	keepAlive    *time.Duration
-	requests     []Request
+	requests     []*Request
 	limiter      *rate.Limiter
 	events       chan *event.Event
 	conns        map[string]*conn

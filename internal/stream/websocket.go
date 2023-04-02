@@ -74,7 +74,7 @@ func (s *Stream) RandomKey() string {
 	return fmt.Sprintf("_%d", seededRand.Int())
 }
 
-func (s *Stream) Request(request Request) error {
+func (s *Stream) Request(request *Request) error {
 	s.requests = append(s.requests, request)
 	conn, err := s.getStream(request.Endpoint)
 	if err != nil {
@@ -101,7 +101,7 @@ func (s *Stream) Request(request Request) error {
 	return nil
 }
 
-func (s *Stream) Receive(request Request) {
+func (s *Stream) Receive(request *Request) {
 	conn, err := s.getStream(request.Endpoint)
 	if err != nil {
 		s.events <- &event.Event{

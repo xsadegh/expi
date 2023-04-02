@@ -58,7 +58,7 @@ func (b *Binance) SubscribeCandles(period string, symbols []string) error {
 		params = append(params, fmt.Sprintf("%s@kline_%s", strings.ToLower(symbol), period))
 	}
 
-	request := stream.Request{
+	request := &stream.Request{
 		Method: "SUBSCRIBE", Endpoint: b.stream.RandomKey(), Params: params,
 	}
 

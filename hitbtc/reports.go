@@ -47,7 +47,7 @@ func (r *ReportResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (h *HitBTC) SubscribeReports() error {
-	request := stream.Request{
+	request := &stream.Request{
 		Endpoint: "/trading", Method: "spot_subscribe", Authenticate: true,
 	}
 
