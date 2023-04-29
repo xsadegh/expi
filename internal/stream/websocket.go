@@ -106,7 +106,7 @@ func (s *Stream) Receive(request *Request) {
 	if err != nil {
 		s.events <- &event.Event{
 			Topic:    "error",
-			Response: err.Error(),
+			Response: fmt.Errorf("get stream connection: %v", err.Error()),
 		}
 	}
 
@@ -166,8 +166,8 @@ func (s *Stream) Receive(request *Request) {
 
 		if _, ok := payload["error"]; ok {
 			s.events <- &event.Event{
-				Response: string(msg),
 				Topic:    "error",
+				Response: string(msg),
 			}
 
 			continue

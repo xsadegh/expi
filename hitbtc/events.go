@@ -15,7 +15,11 @@ func (h *HitBTC) receive(evt *event.Event) {
 		report := &ReportResponse{}
 		err := json.Unmarshal(evt.Response.([]byte), &report)
 		if err != nil {
-			h.receiver(&event.Event{Event: err})
+			h.receiver(&event.Event{
+				Topic: "error:hitbtc",
+				Event: fmt.Errorf("report response error :%v", err),
+			})
+			return
 		}
 		if report.ID == 0 {
 			return
@@ -27,7 +31,11 @@ func (h *HitBTC) receive(evt *event.Event) {
 		candle := &CandleResponse{}
 		err := json.Unmarshal(evt.Response.([]byte), &candle)
 		if err != nil {
-			h.receiver(&event.Event{Event: err})
+			h.receiver(&event.Event{
+				Topic: "error:hitbtc",
+				Event: fmt.Errorf("candles response error :%v", err),
+			})
+			return
 		}
 
 		h.receiver(&event.Event{Event: candle})
@@ -38,12 +46,22 @@ func (h *HitBTC) receive(evt *event.Event) {
 		case []byte:
 			err := json.Unmarshal(evt.Response.([]byte), &apiError)
 			if err != nil {
-				h.receiver(&event.Event{Event: err})
+				h.receiver(&event.Event{
+					Topic: "error:hitbtc",
+					Event: fmt.Errorf("unmarshal api error :%v", err),
+				})
+				return
 			}
 
-			h.receiver(&event.Event{Event: error(apiError)})
+			h.receiver(&event.Event{
+				Topic: "error:hitbtc",
+				Event: fmt.Errorf("api error :%v", error(apiError)),
+			})
 		case string:
-			h.receiver(&event.Event{Event: fmt.Errorf(evt.Response.(string))})
+			h.receiver(&event.Event{
+				Topic: "error:hitbtc",
+				Event: fmt.Errorf("api error :%v", evt.Response),
+			})
 		}
 	}
 }

@@ -14,7 +14,14 @@ func (b *Binance) receive(evt *event.Event) {
 		report := &ReportResponse{}
 		err := json.Unmarshal(evt.Response.([]byte), &report)
 		if err != nil {
-			b.receiver(&event.Event{Event: err})
+			b.receiver(&event.Event{
+				Topic: "error:binance",
+				Event: fmt.Errorf("report response error :%v", err),
+			})
+			return
+		}
+		if report.ID == 0 {
+			return
 		}
 
 		b.receiver(&event.Event{Event: report})
@@ -23,7 +30,11 @@ func (b *Binance) receive(evt *event.Event) {
 		candle := &CandleResponse{}
 		err := json.Unmarshal(evt.Response.([]byte), &candle)
 		if err != nil {
-			b.receiver(&event.Event{Event: err})
+			b.receiver(&event.Event{
+				Topic: "error:binance",
+				Event: fmt.Errorf("kline response error :%v", err),
+			})
+			return
 		}
 
 		b.receiver(&event.Event{Event: candle})
@@ -34,12 +45,22 @@ func (b *Binance) receive(evt *event.Event) {
 		case []byte:
 			err := json.Unmarshal(evt.Response.([]byte), &apiError)
 			if err != nil {
-				b.receiver(&event.Event{Event: err})
+				b.receiver(&event.Event{
+					Topic: "error:binance",
+					Event: fmt.Errorf("unmarshal api error :%v", err),
+				})
+				return
 			}
 
-			b.receiver(&event.Event{Event: error(apiError)})
+			b.receiver(&event.Event{
+				Topic: "error:binance",
+				Event: fmt.Errorf("api error :%v", error(apiError)),
+			})
 		case string:
-			b.receiver(&event.Event{Event: fmt.Errorf(evt.Response.(string))})
+			b.receiver(&event.Event{
+				Topic: "error:binance",
+				Event: fmt.Errorf("api error :%v", evt.Response),
+			})
 		}
 	}
 }
