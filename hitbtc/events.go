@@ -17,7 +17,7 @@ func (h *HitBTC) receive(evt *event.Event) {
 		if err != nil {
 			h.receiver(&event.Event{
 				Topic: "error:hitbtc",
-				Event: fmt.Errorf("report response error :%v", err),
+				Error: fmt.Errorf("report response error :%v", err),
 			})
 			return
 		}
@@ -33,7 +33,7 @@ func (h *HitBTC) receive(evt *event.Event) {
 		if err != nil {
 			h.receiver(&event.Event{
 				Topic: "error:hitbtc",
-				Event: fmt.Errorf("candles response error :%v", err),
+				Error: fmt.Errorf("candles response error :%v", err),
 			})
 			return
 		}
@@ -48,19 +48,19 @@ func (h *HitBTC) receive(evt *event.Event) {
 			if err != nil {
 				h.receiver(&event.Event{
 					Topic: "error:hitbtc",
-					Event: fmt.Errorf("unmarshal api error :%v", err),
+					Error: fmt.Errorf("unmarshal api error :%v", err),
 				})
 				return
 			}
 
 			h.receiver(&event.Event{
 				Topic: "error:hitbtc",
-				Event: fmt.Errorf("api error :%v", error(apiError)),
+				Error: fmt.Errorf("api error :%v", error(apiError)),
 			})
 		case string:
 			h.receiver(&event.Event{
 				Topic: "error:hitbtc",
-				Event: fmt.Errorf("api error :%v", evt.Response),
+				Error: fmt.Errorf("api error :%v", evt.Response),
 			})
 		}
 	}

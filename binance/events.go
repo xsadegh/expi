@@ -16,7 +16,7 @@ func (b *Binance) receive(evt *event.Event) {
 		if err != nil {
 			b.receiver(&event.Event{
 				Topic: "error:binance",
-				Event: fmt.Errorf("report response error :%v", err),
+				Error: fmt.Errorf("report response error :%v", err),
 			})
 			return
 		}
@@ -32,7 +32,7 @@ func (b *Binance) receive(evt *event.Event) {
 		if err != nil {
 			b.receiver(&event.Event{
 				Topic: "error:binance",
-				Event: fmt.Errorf("kline response error :%v", err),
+				Error: fmt.Errorf("kline response error :%v", err),
 			})
 			return
 		}
@@ -47,19 +47,19 @@ func (b *Binance) receive(evt *event.Event) {
 			if err != nil {
 				b.receiver(&event.Event{
 					Topic: "error:binance",
-					Event: fmt.Errorf("unmarshal api error :%v", err),
+					Error: fmt.Errorf("unmarshal api error :%v", err),
 				})
 				return
 			}
 
 			b.receiver(&event.Event{
 				Topic: "error:binance",
-				Event: fmt.Errorf("api error :%v", error(apiError)),
+				Error: fmt.Errorf("api error :%v", error(apiError)),
 			})
 		case string:
 			b.receiver(&event.Event{
 				Topic: "error:binance",
-				Event: fmt.Errorf("api error :%v", evt.Response),
+				Error: fmt.Errorf("api error :%v", evt.Response),
 			})
 		}
 	}
